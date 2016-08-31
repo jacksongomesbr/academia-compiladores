@@ -5,3 +5,4 @@ function exec (input) {
 }
 
 var vinte = exec("4 * 5");
+console.log(vinte);

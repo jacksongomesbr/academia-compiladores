@@ -71,20 +71,22 @@
     recoverable: (boolean: TRUE when the parser has a error recovery rule available for this particular error)
   }
 */
-var calculadora = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,3],$V1=[1,4],$V2=[1,5],$V3=[1,6],$V4=[1,7],$V5=[1,9],$V6=[1,10],$V7=[1,11],$V8=[1,12],$V9=[1,13],$Va=[5,6,7,8,9,10,12],$Vb=[5,6,7,12],$Vc=[5,6,7,8,9,12];
+var mundo = (function(){
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,11],$V1=[1,12],$V2=[1,13],$V3=[1,14],$V4=[1,15],$V5=[5,44],$V6=[5,20,28,34,39,40,42,44],$V7=[1,29],$V8=[1,30],$V9=[1,31],$Va=[1,32],$Vb=[1,33],$Vc=[1,37],$Vd=[1,38],$Ve=[1,39],$Vf=[1,40],$Vg=[1,41],$Vh=[1,42],$Vi=[1,43],$Vj=[7,8,9,10,11,12,13,15],$Vk=[7,8,15],$Vl=[7,8,9,10,15];
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"expressions":3,"e":4,"EOF":5,"+":6,"-":7,"*":8,"/":9,"^":10,"(":11,")":12,"NUMBER":13,"E":14,"PI":15,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",6:"+",7:"-",8:"*",9:"/",10:"^",11:"(",12:")",13:"NUMBER",14:"E",15:"PI"},
-productions_: [0,[3,2],[4,3],[4,3],[4,3],[4,3],[4,3],[4,2],[4,3],[4,1],[4,1],[4,1]],
+symbols_: {"error":2,"mundo":3,"instrucoes":4,"EOF":5,"expressao":6,"PLUS":7,"MINUS":8,"MULT":9,"DIV":10,"POW":11,"FACT":12,"PORCENT":13,"LPAREN":14,"RPAREN":15,"NUMBER":16,"E":17,"PI":18,"instrucao":19,"SEMICOLON":20,"tipo_pessoa":21,"tipo_curso":22,"tipo_universidade":23,"q_universidade_cursos":24,"info":25,"imprimir_resumo":26,"condicional_simples":27,"NOME":28,"V_SER":29,"N_PESSOA":30,"N_UNIVERSIDADE":31,"N_CURSO":32,"P_DE":33,"P_QUAIS":34,"V_SAO":35,"A_OS":36,"N_CURSOS":37,"INTERROGACAO":38,"INFO":39,"V_IMPRIMIR":40,"N_RESUMO":41,"SE":42,"ENTAO":43,"FIM_SE":44,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",7:"PLUS",8:"MINUS",9:"MULT",10:"DIV",11:"POW",12:"FACT",13:"PORCENT",14:"LPAREN",15:"RPAREN",16:"NUMBER",17:"E",18:"PI",20:"SEMICOLON",28:"NOME",29:"V_SER",30:"N_PESSOA",31:"N_UNIVERSIDADE",32:"N_CURSO",33:"P_DE",34:"P_QUAIS",35:"V_SAO",36:"A_OS",37:"N_CURSOS",38:"INTERROGACAO",39:"INFO",40:"V_IMPRIMIR",41:"N_RESUMO",42:"SE",43:"ENTAO",44:"FIM_SE"},
+productions_: [0,[3,2],[6,3],[6,3],[6,3],[6,3],[6,3],[6,2],[6,2],[6,2],[6,3],[6,1],[6,1],[6,1],[4,3],[4,2],[4,2],[4,1],[19,1],[19,1],[19,1],[19,1],[19,1],[19,1],[19,1],[21,3],[23,3],[22,5],[24,7],[25,1],[26,2],[27,7]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
 var $0 = $$.length - 1;
 switch (yystate) {
 case 1:
-return $$[$0-1];
+
+			console.log('mundo');
+		
 break;
 case 2:
 this.$ = $$[$0-2]+$$[$0];
@@ -102,24 +104,81 @@ case 6:
 this.$ = Math.pow($$[$0-2], $$[$0]);
 break;
 case 7:
-this.$ = -$$[$0];
+
+          this.$ = (function fact (n) { return n==0 ? 1 : fact(n-1) * n })($$[$0-1]);
+        
 break;
 case 8:
-this.$ = $$[$0-1];
+this.$ = $$[$0-1]/100;
 break;
 case 9:
-this.$ = Number(yytext);
+this.$ = -$$[$0];
 break;
 case 10:
-this.$ = Math.E;
+this.$ = $$[$0-1];
 break;
 case 11:
+this.$ = Number(yytext);
+break;
+case 12:
+this.$ = Math.E;
+break;
+case 13:
 this.$ = Math.PI;
+break;
+case 25:
+
+			console.log('adicionando pessoa');
+			pessoas.push($$[$0-2]);
+			console.log(pessoas);
+		
+break;
+case 26:
+
+		console.log('adicionando universidade');
+		universidades.push($$[$0-2]);
+		console.log(universidades);
+	
+break;
+case 27:
+
+		console.log('adicionando curso');
+		cursos.push([$$[$0], $$[$0-4]]);
+	
+break;
+case 28:
+
+		var c = cursos_de_universidade($$[$0-1]);
+		console.log('cursos de ' + $$[$0-1]);
+		console.log(c);
+	
+break;
+case 29:
+
+		return info();
+	
+break;
+case 30:
+
+		console.log('pessoas');
+		console.log(pessoas);
+		
+		console.log('universidades:');
+		console.log(universidades);
+		
+		console.log('cursos:');
+		console.log(cursos);
+	
+break;
+case 31:
+
+			console.log('se');
+		
 break;
 }
 },
-table: [{3:1,4:2,7:$V0,11:$V1,13:$V2,14:$V3,15:$V4},{1:[3]},{5:[1,8],6:$V5,7:$V6,8:$V7,9:$V8,10:$V9},{4:14,7:$V0,11:$V1,13:$V2,14:$V3,15:$V4},{4:15,7:$V0,11:$V1,13:$V2,14:$V3,15:$V4},o($Va,[2,9]),o($Va,[2,10]),o($Va,[2,11]),{1:[2,1]},{4:16,7:$V0,11:$V1,13:$V2,14:$V3,15:$V4},{4:17,7:$V0,11:$V1,13:$V2,14:$V3,15:$V4},{4:18,7:$V0,11:$V1,13:$V2,14:$V3,15:$V4},{4:19,7:$V0,11:$V1,13:$V2,14:$V3,15:$V4},{4:20,7:$V0,11:$V1,13:$V2,14:$V3,15:$V4},o($Va,[2,7]),{6:$V5,7:$V6,8:$V7,9:$V8,10:$V9,12:[1,21]},o($Vb,[2,2],{8:$V7,9:$V8,10:$V9}),o($Vb,[2,3],{8:$V7,9:$V8,10:$V9}),o($Vc,[2,4],{10:$V9}),o($Vc,[2,5],{10:$V9}),o($Va,[2,6]),o($Va,[2,8])],
-defaultActions: {8:[2,1]},
+table: [{3:1,4:2,19:3,21:4,22:5,23:6,24:7,25:8,26:9,27:10,28:$V0,34:$V1,39:$V2,40:$V3,42:$V4},{1:[3]},{5:[1,16]},o($V5,[2,17],{19:3,21:4,22:5,23:6,24:7,25:8,26:9,27:10,4:18,20:[1,17],28:$V0,34:$V1,39:$V2,40:$V3,42:$V4}),o($V6,[2,18]),o($V6,[2,19]),o($V6,[2,20]),o($V6,[2,21]),o($V6,[2,22]),o($V6,[2,23]),o($V6,[2,24]),{29:[1,19]},{35:[1,20]},o($V6,[2,29]),{41:[1,21]},{14:[1,22]},{1:[2,1]},o($V5,[2,16],{19:3,21:4,22:5,23:6,24:7,25:8,26:9,27:10,4:23,28:$V0,34:$V1,39:$V2,40:$V3,42:$V4}),o($V5,[2,15]),{30:[1,24],31:[1,26],32:[1,25]},{36:[1,27]},o($V6,[2,30]),{6:28,8:$V7,14:$V8,16:$V9,17:$Va,18:$Vb},o($V5,[2,14]),o($V6,[2,25]),{33:[1,34]},o($V6,[2,26]),{37:[1,35]},{7:$Vc,8:$Vd,9:$Ve,10:$Vf,11:$Vg,12:$Vh,13:$Vi,15:[1,36]},{6:44,8:$V7,14:$V8,16:$V9,17:$Va,18:$Vb},{6:45,8:$V7,14:$V8,16:$V9,17:$Va,18:$Vb},o($Vj,[2,11]),o($Vj,[2,12]),o($Vj,[2,13]),{28:[1,46]},{33:[1,47]},{43:[1,48]},{6:49,8:$V7,14:$V8,16:$V9,17:$Va,18:$Vb},{6:50,8:$V7,14:$V8,16:$V9,17:$Va,18:$Vb},{6:51,8:$V7,14:$V8,16:$V9,17:$Va,18:$Vb},{6:52,8:$V7,14:$V8,16:$V9,17:$Va,18:$Vb},{6:53,8:$V7,14:$V8,16:$V9,17:$Va,18:$Vb},o($Vj,[2,7]),o($Vj,[2,8]),o($Vj,[2,9]),{7:$Vc,8:$Vd,9:$Ve,10:$Vf,11:$Vg,12:$Vh,13:$Vi,15:[1,54]},o($V6,[2,27]),{28:[1,55]},{4:56,19:3,21:4,22:5,23:6,24:7,25:8,26:9,27:10,28:$V0,34:$V1,39:$V2,40:$V3,42:$V4},o($Vk,[2,2],{9:$Ve,10:$Vf,11:$Vg,12:$Vh,13:$Vi}),o($Vk,[2,3],{9:$Ve,10:$Vf,11:$Vg,12:$Vh,13:$Vi}),o($Vl,[2,4],{11:$Vg,12:$Vh,13:$Vi}),o($Vl,[2,5],{11:$Vg,12:$Vh,13:$Vi}),o([7,8,9,10,11,15],[2,6],{12:$Vh,13:$Vi}),o($Vj,[2,10]),{38:[1,57]},{44:[1,58]},o($V6,[2,28]),o($V6,[2,31])],
+defaultActions: {16:[2,1]},
 parseError: function parseError(str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -270,6 +329,39 @@ parse: function parse(input) {
     }
     return true;
 }};
+
+var pessoas = [];
+var universidades = [];
+var cursos = []; 
+var relacoes = [];
+
+function relacoes_de(nome) {
+	var r = [];
+	for(var i = 0; i < relacoes.length; i++) {
+		if (relacoes[i][0] == nome) {
+			r.push(relacoes[i]);
+		}
+	}
+	return r;
+}
+
+function info() {
+	return { 
+		pessoas : pessoas,
+		relacoes : relacoes,
+		relacoes_de : relacoes_de
+	};
+}
+
+function cursos_de_universidade(universidade) {
+	var c = [];
+	for(var i = 0; i < cursos.length; i++) {
+		if (cursos[i][0] == universidade) {
+			c.push(cursos[i][1]);
+		}
+	}
+	return c;
+}
 /* generated by jison-lex 0.3.4 */
 var lexer = (function(){
 var lexer = ({
@@ -598,34 +690,92 @@ options: {},
 performAction: function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
 var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
-case 0:/* pula espaços em branco */
+case 0:/* ignore whitespace */
 break;
-case 1:return 13;
+case 1:return 16;
 break;
-case 2:return 8;
+case 2:return 30;
 break;
-case 3:return 9;
+case 3:return 31;
 break;
-case 4:return 7;
+case 4:return 37;
 break;
-case 5:return 6;
+case 5:return 32;
 break;
-case 6:return 10;
+case 6:return 'N_ALUNO';
 break;
-case 7:return 11;
+case 7:return 34;
 break;
-case 8:return 12;
+case 8:return 40;
 break;
-case 9:return 15;
+case 9:return 41;
 break;
-case 10:return 14;
+case 10:return 29;
 break;
-case 11:return 5;
+case 11:return 33;
+break;
+case 12:return 35;
+break;
+case 13:return 42;
+break;
+case 14:return 43;
+break;
+case 15:return 44;
+break;
+case 16:return 36;
+break;
+case 17:return 38;
+break;
+case 18:return 14;
+break;
+case 19:return 15;
+break;
+case 20:return 9
+break;
+case 21:return 10
+break;
+case 22:return 8
+break;
+case 23:return 7
+break;
+case 24:return 11
+break;
+case 25:return 12
+break;
+case 26:return 13
+break;
+case 27:return 18
+break;
+case 28:return 17
+break;
+case 29:return 'GT';
+break;
+case 30:return 'LT';
+break;
+case 31:return 'GTE';
+break;
+case 32:return 'LTE';
+break;
+case 33:return 'COLON';
+break;
+case 34:return 20;
+break;
+case 35:return 'NL';
+break;
+case 36:return 'ASSIGN'
+break;
+case 37:return 'EQUALS';
+break;
+case 38:return 28;
+break;
+case 39:return 5;
+break;
+case 40:return 'INVALID';
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:\*)/,/^(?:\/)/,/^(?:-)/,/^(?:\+)/,/^(?:\^)/,/^(?:\()/,/^(?:\))/,/^(?:PI\b)/,/^(?:E\b)/,/^(?:$)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11],"inclusive":true}}
+rules: [/^(?:\s+)/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:pessoa\b)/,/^(?:universidade\b)/,/^(?:cursos\b)/,/^(?:curso\b)/,/^(?:aluno\b)/,/^(?:quais\b)/,/^(?:imprimir\b)/,/^(?:resumo\b)/,/^(?:eh\b)/,/^(?:de\b)/,/^(?:sao\b)/,/^(?:se\b)/,/^(?:entao\b)/,/^(?:fim-se\b)/,/^(?:os\b)/,/^(?:\?)/,/^(?:\()/,/^(?:\))/,/^(?:\*)/,/^(?:\/)/,/^(?:-)/,/^(?:\+)/,/^(?:\^)/,/^(?:!)/,/^(?:%)/,/^(?:PI\b)/,/^(?:E\b)/,/^(?:>)/,/^(?:<)/,/^(?:>=)/,/^(?:<=)/,/^(?:,)/,/^(?:;)/,/^(?:\n+)/,/^(?:=)/,/^(?:==)/,/^(?:[a-zA-Z][a-zA-Z0-9\-]*)/,/^(?:$)/,/^(?:.)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40],"inclusive":true}}
 });
 return lexer;
 })();
@@ -639,9 +789,9 @@ return new Parser;
 
 
 if (typeof require !== 'undefined' && typeof exports !== 'undefined') {
-exports.parser = calculadora;
-exports.Parser = calculadora.Parser;
-exports.parse = function () { return calculadora.parse.apply(calculadora, arguments); };
+exports.parser = mundo;
+exports.Parser = mundo.Parser;
+exports.parse = function () { return mundo.parse.apply(mundo, arguments); };
 exports.main = function commonjsMain(args) {
     if (!args[1]) {
         console.log('Usage: '+args[0]+' FILE');

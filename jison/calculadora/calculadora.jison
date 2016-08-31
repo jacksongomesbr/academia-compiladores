@@ -32,7 +32,7 @@
 
 expressions
     : e EOF
-        {console.log($1); return $1;}
+        {return $1;}
     ;
 
 e
