@@ -1,0 +1,31 @@
+%{
+
+%}
+
+%start programa
+
+%ebnf
+
+%%
+
+programa 
+    : sentencas EOF { return yy.parser.yy; }
+    ;
+
+sentencas 
+    : sentenca '.' sentencas?
+    | NL
+    ;
+
+sentenca 
+    : comando 
+    ;
+
+comando
+    : CMD_MOVER_PARA ponto  { yy.parser.yy.moverPara($2); }
+    | CMD_MARQUE_AQUI       { yy.parser.yy.marcar(); } 
+    ;
+
+ponto
+    : '(' NUMERO ',' NUMERO ')'     { $$ = yy.parser.yy.Ponto($2, $4); } 
+    ;

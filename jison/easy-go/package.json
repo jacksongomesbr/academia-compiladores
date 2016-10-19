@@ -1,0 +1,11 @@
+{
+  "name": "easy-go",
+  "version": "1.0.0",
+  "description": "easy-close-to-natural programming language",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jackson Gomes",
+  "license": "ISC"
+}

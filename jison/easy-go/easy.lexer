@@ -1,0 +1,18 @@
+%options flex case-insensitive
+
+%%
+
+[\r\n]+                 return 'NL';
+\s+                     /* skip whitespace */
+\#[^\r\n]*              /* skip comments */
+"mover para"            return 'CMD_MOVER_PARA';
+"marque aqui"           return 'CMD_MARQUE_AQUI';
+\"[^\"]*\"|\'[^\']*\'	return 'STRING';
+"("						return '(';
+")"						return ')';
+"."                     return '.';
+","                     return ',';
+\d*\.\d+				return 'NUMERO';
+[1-9][\d]*|[0]+			return 'NUMERO';
+<<EOF>>                 return 'EOF';
+.                       return 'INVALID';
