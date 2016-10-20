@@ -1,15 +1,24 @@
 <html>
 <head>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="http://underscorejs.org/underscore-min.js"></script>
     <script src="easy.js"></script>
     <script src="diagram.js"></script>
     <script>
-        var fonte = "mover para (1.0, 1.0)."
-        + "marque aqui."
-        + "mover para (0,0)."
-        + "marque aqui.";
-
-        var programa = Diagram.parse(fonte);
+        function compilar() {
+            var codigo = $('#editor').val();
+            var saida = $('#saida');
+            var programa = Diagram.parse(codigo, saida);
+        }
     </script>
 </head>
+<body>
+    <div>
+    <textarea id="editor" cols="80" rows="20"></textarea>
+    </div>
+
+    <button onclick="compilar()">Compilar</button>
+
+    <ul id="saida"></ul>
+</body>
 </html>

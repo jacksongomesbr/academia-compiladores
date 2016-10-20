@@ -1,5 +1,6 @@
-function Diagram() {
+function Diagram(output) {
     this.ponto = [];
+    this.output = output;
 }
 
 function ParseError(message, hash) {
@@ -13,10 +14,11 @@ ParseError.prototype = new Error();
 
 Diagram.ParseError = ParseError;
 
-Diagram.parse = function (input) {
+Diagram.parse = function (input, output) {
     // Create the object to track state and deal with errors
-    easy.yy = new Diagram();
+    easy.yy = new Diagram(output);
     easy.yy.parseError = function (message, hash) {
+        $(easy.yy.output).append('<li>' + message + '</li>');
         throw new ParseError(message, hash);
     };
 
@@ -29,12 +31,12 @@ Diagram.parse = function (input) {
 };
 
 Diagram.prototype.moverPara = function(ponto) {
-    console.log('definindo novo ponto atual: ', ponto);
+    $(this.output).append('<li>definindo novo ponto atual: ' +  ponto + '</li>');
     this.ponto = ponto;
 }
 
 Diagram.prototype.marcar = function() {
-    console.log('marcando ponto atual: ', this.ponto);
+    $(this.output).append('<li>marcando ponto atual: ' +  this.ponto + '</li>');
 }
 
 Diagram.prototype.Ponto = function(x, y) {
