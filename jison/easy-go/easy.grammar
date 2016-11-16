@@ -1,5 +1,8 @@
 %{
-
+function prependChild(node, child){
+    node.splice(2, 0, child); 
+    return node;
+}
 %}
 
 %start programa
@@ -9,23 +12,59 @@
 %%
 
 programa 
-    : sentencas EOF { return yy.parser.yy; }
-    ;
-
-sentencas 
-    : sentenca '.' sentencas?
-    | NL
+    : sentenca+ EOF 
+        %{
+            $$ = {
+                nodeType: 'PROGRAMA', 
+                sentencas: $1
+            };
+            return $$;  
+        %}
     ;
 
 sentenca 
-    : comando 
+    : sentenca '.'
+    | comando 
     ;
 
 comando
-    : CMD_MOVER_PARA ponto  { yy.parser.yy.moverPara($2); }
-    | CMD_MARQUE_AQUI       { yy.parser.yy.marcar(); } 
+    : CMD_MOVER_PARA ponto  %{ 
+        $$ = {
+            nodeType: 'COMANDO', 
+            name: 'MOVER_PARA', 
+            params: [$2] 
+        };
+    %}
+    | CMD_MARQUE_AQUI
+        %{
+            $$ = {nodeType: 'COMANDO', name: 'MARQUE_AQUI'};
+        %}
+     }} 
     ;
 
 ponto
-    : '(' NUMERO ',' NUMERO ')'     { $$ = yy.parser.yy.Ponto($2, $4); } 
+    : '(' expressao ',' expressao ')' 
+        %{ 
+            $$ = { 
+                nodeType: 'PONTO',
+                value: [$2, $4] 
+            }; 
+        %}
     ;
+
+expressao :
+    NUMERO
+        %{
+            $$ = {
+                nodeType: 'EXPRESSAO_NUMERO',
+                text: yytext,
+                val: Number(yytext),
+            }; 
+        %}
+    ;
+
+%% 
+var Ponto = function(x, y) {
+    this.x = x.val;
+    this.y = y.val;
+}

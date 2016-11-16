@@ -1,15 +1,12 @@
 <html>
 <head>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="http://underscorejs.org/underscore-min.js"></script>
-    <script src="easy.js"></script>
-    <script src="interpretador.js"></script>
+    <script src="classy.js"></script>
     <script>
         function compilar() {
             var codigo = $('#editor').val();
-            var saida = $('#saida');
-            var programa = easy.parse(codigo);
-            var interpretador = new Interpretador(programa, canvas, saida);
+            var programa = classy.parse(codigo);
+            console.log(programa);
         }
     </script>
 </head>
