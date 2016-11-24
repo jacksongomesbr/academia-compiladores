@@ -1,25 +1,71 @@
 <html>
 <head>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="http://underscorejs.org/underscore-min.js"></script>
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+    <script src="lib/jquery-3.1.1.min.js"></script>
+    <script src="lib/underscore-min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="lib/fabric.min.js"></script>
     <script src="easy.js"></script>
     <script src="interpretador.js"></script>
     <script>
-        function compilar() {
+        function parserSetup() {
+            function ParseError(message, hash) {
+                _.extend(this, hash);
+                this.name = "ParseError";
+                this.message = (message || "");
+            }
+            ParseError.prototype = new Error();
+            easy.yy.parseError = function (message, hash) {
+                $(saida).append('<div>' + message + '</div>');
+                throw new ParseError(message, hash);
+            };
+        }
+
+        var saida, interpretador;
+
+        function ideSetup() {
+            saida = $('#saida');
+            interpretador = new Interpretador(null, 'canvas', saida);
+        }
+
+        function executar() {
             var codigo = $('#editor').val();
-            var saida = $('#saida');
-            var programa = easy.parse(codigo);
-            var interpretador = new Interpretador(programa, canvas, saida);
+            var ast = easy.parse(codigo);
+            console.log(ast);
+            interpretador.ast = ast;
+            interpretador.executarAST();
+        }
+
+        function limpar() {
+            $('#editor').val('');
+            $(saida).html('');
+            interpretador.clear();
         }
     </script>
 </head>
-<body>
-    <div>
-    <textarea id="editor" cols="80" rows="20"></textarea>
+<body onload="ideSetup(); parserSetup();">
+<div class="container">
+    <h1>EasyGO IDE</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div>
+                <textarea class="form-control" id="editor" cols="60" rows="20"></textarea>
+            </div>
+
+            <button class="btn btn-default" onclick="executar()">Compilar</button>
+            <button class="btn btn-default" onclick="limpar()">Limpar</button>
+        </div>
+        <div class="col-md-6">
+            <div class="well">
+                <canvas id="canvas" width="500" height="355"></canvas>
+            </div>
+        </div>
     </div>
 
-    <button onclick="compilar()">Compilar</button>
-
-    <ul id="saida"></ul>
+    <br>
+    <h4>Depurador</h4>
+    <pre id="saida" class="well"></pre>
+</div>
+  
 </body>
 </html>

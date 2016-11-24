@@ -2,17 +2,50 @@
 
 %%
 
-[\r\n]+                 return 'NL';
-\s+                     /* skip whitespace */
-\#[^\r\n]*              /* skip comments */
-"mover para"            return 'CMD_MOVER_PARA';
-"marque aqui"           return 'CMD_MARQUE_AQUI';
-\"[^\"]*\"|\'[^\']*\'	return 'STRING';
-"("						return '(';
-")"						return ')';
-"."                     return '.';
-","                     return ',';
-\d*\.\d+				return 'NUMERO';
-[1-9][\d]*|[0]+			return 'NUMERO';
+\s+                                /* */
+"/*"(.|\r|\n)*?"*/"                /* */
+"//".*($|\r\n|\r|\n)               /* */
+\"[^\"]\"                    return "STRING_LITERAL";
+"mover para"            return 'MOVER_PARA';
+"marque aqui"           return 'MARQUE_AQUI';
+"se"                    return 'SE';
+"entao"                 return 'ENTAO';
+"senao"                 return 'SENAO';
+"enquanto"              return 'ENQUANTO';
+"memorizar"             return 'MEMORIZAR';
+"ou"                    return 'OU_LOGICO';
+"e"                     return 'E_LOGICO';
+"V"                     return 'BOOLEAN_LITERAL';
+"F"                     return 'BOOLEAN_LITERAL';
+"nao"                   return 'NAO';
+"nulo"                  return 'NULO';
+[a-zA-Z]([a-zA-Z0-9])*  return "IDENTIFICADOR";
+[0-9]+                  return "NUMERIC_LITERAL";
+[0-9]+\.[0-9]+          return "NUMERIC_LITERAL";
+"=="                    return 'IGUALDADE';
+"="                     return 'ATRIBUICAO';
+"+"                     return 'MAIS';
+"-"                     return 'MENOS';
+"*"                     return 'MULTIPLICACAO';
+"/"                     return 'DIVISAO';
+"%"                     return 'PORCENTO';
+"^"                     return 'CIRCUNFLEXO';
+"?"                     return 'INTERROGACAO';
+">"                     return 'MAIOR_QUE';
+"<"                     return 'MENOR_QUE';
+"<="                    return 'MENOR_OU_IGUAL_QUE';
+">="                    return 'MAIOR_OU_IGUAL_QUE'; 
+"!="                    return 'DIFERENTE';
+"!"                     return 'EXCLAMACAO';
+"("						return 'EPAREN';
+")"						return 'DPAREN';
+"["                     return 'ECOLCHETE';
+"]"                     return 'DCOLCHETE';
+"."                     return 'PONTO';
+","                     return 'VIRGULA';
+"{"                     return 'ECHAVE';
+"}"                     return 'DCHAVE';
+";"                     return 'PONTO_E_VIRGULA';
+":"                     return 'DOIS_PONTOS';
 <<EOF>>                 return 'EOF';
 .                       return 'INVALID';

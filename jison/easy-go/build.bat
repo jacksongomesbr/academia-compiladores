@@ -1,1 +1,1 @@
-jison easy.grammar easy.lexer
+jison easy.jison
