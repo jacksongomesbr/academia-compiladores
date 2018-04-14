@@ -1,0 +1,48 @@
+<html lang="pt-br">
+ <head>
+     <meta charset="utf-8">
+     <title>Interface para o interpretador da Linguagem Calculadora</title>
+     <script src="calculadora.js"></script>
+     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+     <script>
+         function interpretar(entrada) {
+             if (entrada != '') {
+                 try {
+                    var resultado = calculadora.parse(entrada);
+                    $('#saida').html(resultado);
+                 } catch (e) {
+                    $('#saida').html(String(e));
+                 }
+             }
+         }
+         $(document).ready(function(){
+             /*
+             outras formas de uso:
+
+            console.log(calculadora.Parser);
+            parser = new calculadora.Parser();
+            console.log(parser.parse('1+2'));
+            console.log(parser.symbols_);
+            */
+
+             $('#entrada').keyup(function(){
+                interpretar($(this).val());
+             });
+            $('#btn_calcular').click(function(){
+                interpretar($(this).val());
+            });
+         });
+     </script>
+ </head>
+ <body>
+     <h1>Interface para o interpretador da Linguagem calculadora</h1>
+     <h3>Entrada</h3>
+     <p>Forneça a entrada para ser interpretada:</p>
+     <div>
+         <input type="text" id="entrada" name="entrada"> <button id="btn_calcular">Calcular</button>
+     </div>
+     <br>
+     <h3>Saída</h3>
+     <pre id="saida" style="border: 1px solid black;padding: 5px;"></pre>
+ </body>
+</html>

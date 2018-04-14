@@ -1,38 +1,43 @@
-/* Linguagem para avaliação de expressões matemáticas */
+/* description: Parses and executes mathematical expressions. */
 
-/* regras léxicas */
+/* lexical grammar */
 %lex
-
 %%
-\s+                   /* pula espaços em branco */
-[0-9]+("."[0-9]+)?\b  return 'NUMBER';
-"*"                   return '*';
-"/"                   return '/';
-"-"                   return '-';
-"+"                   return '+';
-"^"                   return '^';
-"("                   return '(';
-")"                   return ')';
-"PI"                  return 'PI';
-"E"                   return 'E';
-<<EOF>>               return 'EOF';
+
+\s+                   /* skip whitespace */
+[0-9]+("."[0-9]+)?\b  return 'NUMBER'
+"*"                   return '*'
+"/"                   return '/'
+"-"                   return '-'
+"+"                   return '+'
+"^"                   return '^'
+"!"                   return '!'
+"%"                   return '%'
+"("                   return '('
+")"                   return ')'
+"PI"                  return 'PI'
+"E"                   return 'E'
+<<EOF>>               return 'EOF'
+.                     return 'INVALID'
 
 /lex
 
-/* associações e precedência de operadores */
+/* operator associations and precedence */
 
 %left '+' '-'
 %left '*' '/'
 %left '^'
+%right '!'
+%right '%'
 %left UMINUS
 
 %start expressions
 
-%% /* gramática */
+%% /* language grammar */
 
 expressions
     : e EOF
-        {return $1;}
+        { return $1; }
     ;
 
 e
@@ -46,6 +51,12 @@ e
         {$$ = $1/$3;}
     | e '^' e
         {$$ = Math.pow($1, $3);}
+    | e '!'
+        {{
+          $$ = (function fact (n) { return n==0 ? 1 : fact(n-1) * n })($1);
+        }}
+    | e '%'
+        {$$ = $1/100;}
     | '-' e %prec UMINUS
         {$$ = -$2;}
     | '(' e ')'
